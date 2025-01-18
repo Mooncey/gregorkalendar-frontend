@@ -1,6 +1,6 @@
 ## gregorkalendar-frontend
 
-# Set up
+### Set up
 
 1. Pull project
 
