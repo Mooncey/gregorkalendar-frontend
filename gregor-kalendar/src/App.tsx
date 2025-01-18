@@ -1,6 +1,7 @@
 import './App.css'
 import { Route, Routes } from 'react-router-dom';
 import DashboardPage from './pages/dashboard/Page';
+import TeamPage from './pages/team/Page';
 
 function App() {
 
@@ -8,6 +9,9 @@ function App() {
     <Routes>
       {/* Define the /dashboard route */}
       <Route path="/dashboard" element={<DashboardPage />} />
+      <Route path="/team" element={<TeamPage params={{
+        id: '123'
+      }} />} />
     </Routes>
   );
 
