@@ -9,5 +9,7 @@
     "paths": {
       "@/*": ["src/*"] // Alias '@' maps to 'src' directory
     }
-  }
+  },
+  "include": ["**/*.ts", "**/*.tsx", "**/*.js"],
+  "exclude": ["node_modules", "dist"]
 }

@@ -1,0 +1,5 @@
+{
+    "typescript.preferences.importModuleSpecifier": "shortest",
+    "typescript.tsdk": "node_modules/typescript/lib"
+}
+  
