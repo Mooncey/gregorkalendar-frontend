@@ -31,7 +31,7 @@ export function TeamList() {
       </div>
       <div className="grid gap-4">
         {teams.map((team) => (
-          <Link key={team.id} to={`/teams/${team.id}`}>
+          <Link key={team.id} to={`/team/${team.id}`}>
             <Card className="p-4 hover:bg-blue-50 transition-colors cursor-pointer">
               <h3 className="text-lg font-medium">{team.name}</h3>
             </Card>
