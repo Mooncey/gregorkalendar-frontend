@@ -3,17 +3,54 @@ import { Route, Routes } from 'react-router-dom';
 import DashboardPage from './pages/dashboard/Page';
 import TeamPage from './pages/team/Page';
 import LoginPage from './pages/login/Page';
+import SettingsPage from './pages/settings/Page';
+import Layout from './layout/Layout';
 
 function App() {
 
+
   return (
     <Routes>
-      {/* Define the /dashboard route */}
-      <Route path="/dashboard" element={<DashboardPage />} />
-      <Route path="/team/:id" element={<TeamPage />} />
-      <Route path="/login" element={<LoginPage />}/>
+      {/* Login page without layout */}
+      <Route path="/login" element={<LoginPage />} />
+
+      {/* Pages with Layout */}
+      <Route
+        path="/dashboard"
+        element={
+          <Layout>
+            <DashboardPage />
+          </Layout>
+        }
+      />
+      <Route
+        path="/team/:id"
+        element={
+          <Layout>
+            <TeamPage />
+          </Layout>
+        }
+      />
+      <Route
+        path="/settings"
+        element={
+          <Layout>
+            <SettingsPage />
+          </Layout>
+        }
+      />
     </Routes>
   );
+
+  // return (
+  //   <Routes>
+  //     {/* Define the /dashboard route */}
+  //     <Route path="/dashboard" element={<DashboardPage />} />
+  //     <Route path="/team/:id" element={<TeamPage />} />
+  //     <Route path="/login" element={<LoginPage />}/>
+  //     <Route path="/settings" element={<SettingsPage />}/>
+  //   </Routes>
+  // );
 
   // const [count, setCount] = useState(0)
 
