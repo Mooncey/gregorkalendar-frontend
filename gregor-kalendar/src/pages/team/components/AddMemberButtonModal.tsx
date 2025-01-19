@@ -19,7 +19,12 @@ import { User } from '../../../types/types'
 import { useParams } from 'react-router-dom'
 import { usePost } from '../../../services/usePost'
 
-export function AddMemberButtonModal() {
+interface AddMemberButtonModalProps {
+  setMembers: React.Dispatch<React.SetStateAction<User[]>>;
+  members: User[]
+}
+
+export function AddMemberButtonModal(props: AddMemberButtonModalProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [addOption, setAddOption] = useState<'single' | 'multiple'>('single')
   const [name, setName] = useState('')
@@ -45,6 +50,7 @@ export function AddMemberButtonModal() {
       sendRequest(requestBody)
 
       console.log('Adding single user:', { name, email })
+      props.setMembers([...props.members, member]);
       // Here you would typically call an API to add the user
     } else {
       console.log('Uploading CSV file:', file?.name)

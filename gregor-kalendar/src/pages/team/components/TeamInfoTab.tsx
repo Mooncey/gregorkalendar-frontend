@@ -9,7 +9,7 @@ import { SetStateAction, useState } from "react"
 export default function TeamInfoTab(teamInfo: {teamInfo: TeamInfo}) {
 
   const [leaders, setLeaders] = useState<User[]>(teamInfo.teamInfo.leaders)
-  // const [members, setMembers] = useState<User[]>(teamInfo.teamInfo.members)
+  const [members, setMembers] = useState<User[]>(teamInfo.teamInfo.members)
   
   const currentUser = JSON.parse(localStorage.getItem('apiData') ?? "{\"name\":\"Emily Fuchs\",\"email\":\"emilyef@ubc.ca\"}");
 
@@ -49,7 +49,7 @@ export default function TeamInfoTab(teamInfo: {teamInfo: TeamInfo}) {
                 <div>
                   <div className="flex justify-between items-center mb-2">
                     <h3 className="text-xl font-semibold">Team Members</h3>
-                    {isLeader && <AddMemberButtonModal />}
+                    {isLeader && <AddMemberButtonModal setMembers={setMembers} members={members}/>}
                   </div>
                   <Table>
                     <TableHeader>
