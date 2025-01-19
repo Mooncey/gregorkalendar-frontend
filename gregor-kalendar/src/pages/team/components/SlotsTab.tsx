@@ -4,7 +4,7 @@ import SlotsTable from "./SlotsTable";
 
 
 
-export default function SlotsTab({ slots } : { slots: Slot[] }) {
+export default function SlotsTab({ slots, leaders } : { slots: Slot[], leaders: string[] }) {
 
     console.log(JSON.stringify(slots))
     return (
@@ -14,7 +14,7 @@ export default function SlotsTab({ slots } : { slots: Slot[] }) {
                 <CardDescription>Set slots for team assignments</CardDescription>
             </CardHeader>
             <CardContent>
-                <SlotsTable slots={slots} />
+                <SlotsTable slots={slots} leaders={leaders} />
             </CardContent>
         </Card>
     );

@@ -10,38 +10,17 @@ import { AddSlotButtonModal } from "./AddSlotButtonModal"
 import { Slot } from "../../../types/types"
 import { rangeToTime } from "../../../utils/block"
 
+export default function SlotsTable({ slots, leaders } : { slots: Slot[], leaders: string[] }) {
 
-const initialSlots: Slot[] = [
-    {
-        slotId: 1,
-        name: "L1A",
-        numMembers: 3,
-        startBlock: 50,
-        endBlock: 60,
-    },
-    {
-        slotId: 2,
-        name: "L1B",
-        numMembers: 3,
-        startBlock: 90,
-        endBlock: 100,
-    },
-    {
-        slotId: 3,
-        name: "L1C",
-        numMembers: 3,
-        startBlock: 500,
-        endBlock: 550,
-    },
-]
+    const currentUser = JSON.parse(localStorage.getItem('apiData') ?? "{\"name\":\"Emily Fuchs\",\"email\":\"emilyef@ubc.ca\"}");
 
-export default function SlotsTable({ slots } : { slots: Slot[] }) {
+    const isLeader = leaders.some((leader) => leader === currentUser.email);
 
     return (
         <div className="space-y-4">
             <div className="flex justify-between items-center">
                 <h2 className="text-2xl font-bold">Slots</h2>
-                <AddSlotButtonModal />
+                {isLeader && <AddSlotButtonModal />}
             </div>
             <div className="rounded-md border">
                 <Table>
