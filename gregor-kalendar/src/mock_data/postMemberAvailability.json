@@ -1,0 +1,6 @@
+{
+	"teamId": 2,
+	"userEmail": "kevz21@student.ubc.ca",
+    "availableBlocks": [16, 17, 18, 19, 20, 21, 22, 104, 110],
+	"preferNotBlocks": [23, 24, 25, 35, 36, 37, 600]
+}

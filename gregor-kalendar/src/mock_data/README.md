@@ -24,7 +24,7 @@
   - It returns the object containing ``teamId`` for the team that got created
   - Refer to the ``createTeam.json``
 - For an Error Code Responses, it is when:
-  - The given userEmail doesn't exists in the Users Table
+  - The given ``userEmail`` doesn't exists in the Users Table
 - Team Name can be duplicate. A pair of Team Name + User Email can also be a duplicate.
 - Response object for creating a team that returns the unique ``Teams.Id`` of the newly created team.
 
@@ -82,3 +82,14 @@
   - It returns response code 200 for a successful addition of the leader to the team with the specified ``teamId``
 - For an Error Code Response, this occurs when:
   - Adding a leader was attempted, but the leader's ``email`` already exists within the team of the specified ``teamId`` (Either within the leaders or the members).
+
+## Post Member Availability Request
+
+- Request Example: ``postMemberAvailability.json``
+
+Occurs when member submits any changes to their availability, 
+
+- For an OK Response:
+  - It returns response code 200 for a successful update and saving of member availability for member `email` within the specified `teamId`. 
+- For an Error Code Response, this occurs when:
+  - From any error, such as an error while saving, 

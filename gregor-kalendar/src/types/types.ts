@@ -2,10 +2,10 @@
 // will be used for display
 // CONSTRAINT: Block is an integer in the range [0, 671].
 export type Block = number; // Ensure runtime validation to enforce the constraint.
-export const B0 = 0; // [[“Monday”, “00:00”], [“Monday”, “00:15”]]
-export const B95 = 95; // [[“Monday”, “23:45”], [“Tuesday”, “00:00”]]
-export const B96 = 96; // [[“Tuesday”, “00:00”], [“Tuesday”, “00:15”]]
-export const B671 = 671 // [[“Sunday”, “23:45”], [“Monday”, “00:00”]]
+export const B0 = 0; // [["Sunday", “00:00”], ["Sunday", “00:15”]]
+export const B95 = 95; // [["Sunday", “23:45”], ["Monday", “00:00”]]
+export const B96 = 96; // [["Monday", “00:00”], ["Monday", “00:15”]]
+export const B671 = 671 // [["Saturday", “23:45”], ["Sunday", “00:00”]]
 
 // TimeString is a representation of time in String format
 // will be used for String display
@@ -16,8 +16,8 @@ export type TimeString = [
 	time: string // in hours and minutes. NOT indicative of start time or end time, just a singular time.
 
 ]
-export const TS0: TimeString = ["Monday", "00:00"];
-export const TS1: TimeString = ["Tuesday", "13:15"];
+export const TS0: TimeString = ["Sunday", "00:00"];
+export const TS1: TimeString = ["Monday", "13:15"];
 
 // MemberAvailability represents a user's email and the blocks they are available for.
 // CONSTAINT: Blocks in availableBlocks are NOT in preferNotBlocks and vice versa (mutually exclusive)

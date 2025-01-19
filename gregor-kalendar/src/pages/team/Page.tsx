@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { getTeam } from "../../services/getTeam";
 import { useFetch } from "../../services/useFetch";
 import TeamInfoTab from "./components/TeamInfoTab";
+import AvailabilityTab from "./components/AvailabilityTab";
 
 export default function TeamPage() {
   
@@ -44,7 +45,7 @@ export default function TeamPage() {
               <CardDescription>Manage team member availability</CardDescription>
             </CardHeader>
             <CardContent>
-              {/* Availability content will be added here */}
+              <AvailabilityTab avilability={data.availibility} />
             </CardContent>
           </Card>
         </TabsContent>
