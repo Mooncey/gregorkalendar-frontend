@@ -137,3 +137,17 @@ export interface CreateTeamResponse {
 	teamId: number
 
 }
+
+export interface GenerateScheduleRequest {
+	
+	teamId: number
+
+}
+
+export interface GenerateScheduleResponse {
+
+	teamId: number,
+
+	schedule: TeamSchedule
+
+}
