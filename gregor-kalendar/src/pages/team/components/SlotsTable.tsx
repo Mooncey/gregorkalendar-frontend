@@ -27,6 +27,7 @@ export default function SlotsTable({ slots, leaders } : { slots: Slot[], leaders
                     <TableHeader>
                         <TableRow>
                             <TableHead>Slot Name</TableHead>
+                            <TableHead># Members Needed</TableHead>
                             <TableHead>Start Day</TableHead>
                             <TableHead>Start Time</TableHead>
                             <TableHead>End Day</TableHead>
@@ -43,6 +44,7 @@ export default function SlotsTable({ slots, leaders } : { slots: Slot[], leaders
                             return (
                                 <TableRow key={slot.slotId}>
                                     <TableCell>{slot.name}</TableCell>
+                                    <TableCell>{slot.numMembers}</TableCell>
                                     <TableCell>{startDay}</TableCell>
                                     <TableCell>{startTime}</TableCell>
                                     <TableCell>{endDay}</TableCell>

@@ -54,4 +54,3 @@ export default function ScheduleTab(props: ScheduleTabProps) {
         </Card>
     );
 }
-

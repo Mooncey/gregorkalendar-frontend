@@ -80,7 +80,7 @@ export default function TeamPage() {
           </TabsList>
 
           <TabsContent value="schedule">
-            <ScheduleTab assignments={postedSchedule} />
+            <ScheduleTab setAssignments={setPostedSchedule} assignments={postedSchedule} />
           </TabsContent>
 
           <TabsContent value="availability">

@@ -16,10 +16,26 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../../components/ui/select"
+import { PostSlot } from "../../../types/apiTypes"
+import { dayStrings, relativeTimeToAbsolute } from "../../../utils/block"
+import { useParams } from "react-router-dom"
 
 const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 const hours = Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, "0"))
 const minutes = ["00", "15", "30", "45"]
+
+// export interface PostSlot {
+
+//   teamId: number;
+
+//   name: string;
+
+//   numMembers: number;
+
+//   startBlock: Block;
+
+//   endBlock: Block;
+// }
 
 export function AddSlotButtonModal() {
   const [open, setOpen] = useState(false)
@@ -30,7 +46,9 @@ export function AddSlotButtonModal() {
   const [startMinute, setStartMinute] = useState("")
   const [endHour, setEndHour] = useState("")
   const [endMinute, setEndMinute] = useState("")
-  const [membersNeeded, setMembersNeeded] = useState("")
+  const [membersNeeded, setMembersNeeded] = useState(0)
+
+  const { id } = useParams();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -53,8 +71,70 @@ export function AddSlotButtonModal() {
     setStartMinute("")
     setEndHour("")
     setEndMinute("")
-    setMembersNeeded("")
+    setMembersNeeded(0)
   }
+
+  const handleAddSlot = async () => {
+
+    const startBlockNum = relativeTimeToAbsolute(dayStrings.indexOf(startDay), parseInt(startHour), parseInt(startMinute))
+    const endBlockNum = relativeTimeToAbsolute(dayStrings.indexOf(endDay), parseInt(endHour), parseInt(endMinute))
+
+
+
+    const requestObject: PostSlot = {
+      teamId: parseInt(id ?? '0'),
+      name: slotName,
+      numMembers: membersNeeded,
+      startBlock: startBlockNum,
+      endBlock: endBlockNum
+    }
+
+    try {
+
+      const response = await fetch('/api/team/slot', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(requestObject),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      console.log(data)
+
+    } catch (error) {
+      console.error('Failed to fetch data:', error);
+    }
+  }
+
+
+
+  // if (!response.ok) {
+  //   throw new Error('Failed to update team data');
+  // }
+
+  // return response.json(); // Assuming it returns the updated team data
+  // const handleLogin = async () => {
+  //   try {
+  //     const response = await fetch(`/api/user?email=${email}`);
+
+  //     if (!response.ok) {
+  //       throw new Error('Network response was not ok');
+  //     }
+
+  //     const data = await response.json();
+
+  //     // Store the response data in localStorage
+  //     localStorage.setItem('apiData', JSON.stringify({name: data.name, email: data.email}))
+
+  //     window.location.href = '/dashboard'
+  //   } catch (error) {
+  //     console.error('Failed to fetch data:', error);
+  //   }
+
+  // }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -176,13 +256,13 @@ export function AddSlotButtonModal() {
               id="membersNeeded"
               type="number"
               value={membersNeeded}
-              onChange={(e) => setMembersNeeded(e.target.value)}
+              onChange={(e) => setMembersNeeded(parseInt(e.target.value ?? '0'))}
               placeholder="Enter number of members needed"
               required
               min="1"
             />
           </div>
-          <Button type="submit" className="w-full">Add Slot</Button>
+          <Button type="submit" className="w-full" onClick={handleAddSlot}>Add Slot</Button>
         </form>
       </DialogContent>
     </Dialog>
