@@ -50,7 +50,8 @@
 - Request Example: 
 ```json
 {
-    "teamId": 1
+    "teamId": 1,
+    "userEmail": "kevz21@student.ubc.ca"
 }
 ``` 
 - Response Example: ``team.json``.
