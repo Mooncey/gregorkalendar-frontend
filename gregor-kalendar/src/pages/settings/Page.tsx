@@ -5,8 +5,8 @@ import { Label } from "../../components/ui/label"
 import { Separator } from "../../components/ui/separator"
 
 export default function SettingsPage() {
-  const [name, setName] = useState('shadcn')
-  const [email] = useState('user@example.com')
+  const [name, setName] = useState('Gregor Kiczales')
+  const [email] = useState('gregor@cs.ubc.ca')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -35,14 +35,14 @@ export default function SettingsPage() {
 
         <form onSubmit={handleSubmit} className="space-y-8">
           <div className="space-y-2">
-            <Label htmlFor="username">Username</Label>
+            <Label htmlFor="name">Name</Label>
             <Input
-              id="username"
+              id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
             <p className="text-sm text-muted-foreground">
-              This is your public display name. It can be your real name or a pseudonym. You can only change this once every 30 days.
+              This is your display name that will be visible to your teams.
             </p>
           </div>
 
@@ -54,7 +54,7 @@ export default function SettingsPage() {
               disabled
             />
             <p className="text-sm text-muted-foreground">
-              You can manage verified email addresses in your email settings.
+              You cannot change your email address.
             </p>
           </div>
 
