@@ -1,0 +1,20 @@
+{
+    "teams": [
+        {
+            "teamName": "My Awesome Team",
+            "teamId": 1
+        },
+        {
+            "teamName": "Frontend Team",
+            "teamId": 2
+        },
+        {
+            "teamName": "Backend Team",
+            "teamId": 3
+        },
+        {
+            "teamName": "CPSC 110 2024W2",
+            "teamId": 4
+        }
+    ]
+}
