@@ -1,8 +1,24 @@
 import { Button } from "../../components/ui/button"
 import { Input } from "../../components/ui/input"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../../components/ui/card"
+import { useState } from "react"
+import { getUser } from "../../services/getUser"
+import { useFetch } from "../../services/useFetch"
 
 export default function LoginPage() {
+
+  const [email, setEmail] = useState<string>('')
+
+
+  const HandleSignIn = () => {
+    // Stabilize the fetch parameters using useMemo
+    const fetchParams = ({
+      userEmail: email
+    });
+
+    const { data, isLoading, error } = useFetch(getUser, fetchParams);
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
@@ -18,7 +34,7 @@ export default function LoginPage() {
           </div>
           <CardTitle className="text-2xl font-bold text-center">Welcome Back</CardTitle>
           <CardDescription className="text-center">
-            Sign in to access your nwHacks Scheduler
+            Sign in to access your Gregor Kalendar
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -29,7 +45,8 @@ export default function LoginPage() {
             <Input
               id="email"
               type="email"
-              placeholder="m@example.com"
+              placeholder="gregor@example.com"
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full"
             />
           </div>
@@ -45,7 +62,7 @@ export default function LoginPage() {
           </div>
         </CardContent>
         <CardFooter>
-          <Button className="w-full">Sign In</Button>
+          <Button className="w-full" onClick={HandleSignIn}>Sign In</Button>
         </CardFooter>
         <div className="text-center pb-4">
           <a href="#" className="text-sm text-blue-600 hover:underline">Forgot password?</a>
