@@ -27,12 +27,12 @@ export default function TeamPage() {
 
     const { data: updatedAvailability, isLoading: updateIsLoading, error: updateError, sendRequest: sendAvailabilityUpdateRequest } = usePost<PostTeamMemberAvailabilityRequest, PostTeamMemberAvailabilityResponse>(postTeamMemberAvailability)
 
-    const [availableBlocks, setAvailableBlocks] = useState<Block[]>([])
-    const [preferNotBlocks, setPreferNotBlocks] = useState<Block[]>([])
+    const [availableBlocks, setAvailableBlocks] = useState<Block[] | null>(null)
+    const [preferNotBlocks, setPreferNotBlocks] = useState<Block[] | null>(null)
     const [postedSchedule, setPostedSchedule] = useState<SlotAssignment[] | null>(null)
 
     useEffect(() => {
-      if (data) {
+      if (data?.availability) {
         setAvailableBlocks(data.availability.availableBlocks)
         setPreferNotBlocks(data.availability.preferNotBlocks)
         setPostedSchedule(data.schedule?.schedule.slotAssignments)
@@ -72,7 +72,7 @@ export default function TeamPage() {
       (<Tabs defaultValue="schedule" className="w-full">
         <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="schedule">Schedule</TabsTrigger>
-          <TabsTrigger value="availability">Availability</TabsTrigger>
+          <TabsTrigger value="availability" disabled={data?.availability == null}>Availability</TabsTrigger>
           <TabsTrigger value="slots">Slots</TabsTrigger>
           <TabsTrigger value="team-info">Team Info</TabsTrigger>
         </TabsList>

@@ -17,6 +17,7 @@ import { PostMemberRequest, PostMemberResponse } from '../../../types/apiTypes'
 import { postMember } from '../../../services/postMember'
 import { User } from '../../../types/types'
 import { useParams } from 'react-router-dom'
+import { usePost } from '../../../services/usePost'
 
 export function AddMemberButtonModal() {
   const [isOpen, setIsOpen] = useState(false)
