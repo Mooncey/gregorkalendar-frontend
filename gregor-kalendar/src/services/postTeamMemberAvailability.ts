@@ -1,7 +1,7 @@
-import { MemberAvailability } from "../types/types";
+import { PostTeamMemberAvailabilityRequest, PostTeamMemberAvailabilityResponse } from "../types/apiTypes";
 
 
-export const postTeamMemberAvailability = async (updatedAvailability: MemberAvailability): Promise<MemberAvailability> => {
+export const postTeamMemberAvailability = async (updatedAvailability: PostTeamMemberAvailabilityRequest): Promise<PostTeamMemberAvailabilityResponse> => {
     const response = await fetch('/api/team/member/availability', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

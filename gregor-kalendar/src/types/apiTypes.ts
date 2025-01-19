@@ -65,3 +65,27 @@ export interface ScheduleResponse {
 
 	schedule: TeamSchedule;
 }
+
+export interface PostTeamMemberAvailabilityRequest {
+	
+	teamId: number;
+
+	userEmail: string;
+
+	availableBlocks: Block[];
+
+	preferNotBlocks: Block[]
+
+}
+
+export interface PostTeamMemberAvailabilityResponse {
+	
+	teamId: number;
+
+	userEmail: string;
+
+	availableBlocks: Block[];
+
+	preferNotBlocks: Block[]
+
+}

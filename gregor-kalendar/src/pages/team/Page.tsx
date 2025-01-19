@@ -9,6 +9,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Block, MemberAvailability } from "../../types/types";
 import { usePost } from "../../services/usePost";
 import { postTeamMemberAvailability } from "../../services/postTeamMemberAvailability";
+import { PostTeamMemberAvailabilityRequest, PostTeamMemberAvailabilityResponse } from "../../types/apiTypes";
 
 export default function TeamPage() {
 
@@ -22,7 +23,7 @@ export default function TeamPage() {
     
     const { data, isLoading, error } = useFetch(getTeam, fetchParams);
 
-    const { data: updatedAvailability, isLoading: updateIsLoading, error: updateError, sendRequest: sendAvailabilityUpdateRequest } = usePost<MemberAvailability, MemberAvailability>(postTeamMemberAvailability)
+    const { data: updatedAvailability, isLoading: updateIsLoading, error: updateError, sendRequest: sendAvailabilityUpdateRequest } = usePost<PostTeamMemberAvailabilityRequest, PostTeamMemberAvailabilityResponse>(postTeamMemberAvailability)
 
     const [availableBlocks, setAvailableBlocks] = useState<Block[]>([])
     const [preferNotBlocks, setPreferNotBlocks] = useState<Block[]>([])
@@ -43,7 +44,16 @@ export default function TeamPage() {
 
     const handleMemberAvailabilityUpdate = async (updateParams: MemberAvailability): Promise<void> => {
       // make a post availability request
-      await sendAvailabilityUpdateRequest(updateParams)
+      const { availableBlocks: updateAvailBlocks, preferNotBlocks: updatePreferBlocks } = updateParams
+
+      const postUpdateParams: PostTeamMemberAvailabilityRequest = {
+        teamId: parseInt(id ?? '0'),
+        userEmail: "someone_1@example.com",
+        availableBlocks: updateAvailBlocks,
+        preferNotBlocks: updatePreferBlocks,
+      }
+
+      await sendAvailabilityUpdateRequest(postUpdateParams)
     }
   
 
