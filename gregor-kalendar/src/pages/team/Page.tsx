@@ -5,7 +5,10 @@ import { getTeam } from "../../services/getTeam";
 import { useFetch } from "../../services/useFetch";
 import TeamInfoTab from "./components/TeamInfoTab";
 import AvailabilityTab from "./components/AvailabilityTab";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { Block, MemberAvailability } from "../../types/types";
+import { usePost } from "../../services/usePost";
+import { postTeamMemberAvailability } from "../../services/postTeamMemberAvailability";
 
 export default function TeamPage() {
 
@@ -18,6 +21,33 @@ export default function TeamPage() {
     }), [id]);
     
     const { data, isLoading, error } = useFetch(getTeam, fetchParams);
+
+    const { data: updatedAvailability, isLoading: updateIsLoading, error: updateError, sendRequest: sendAvailabilityUpdateRequest } = usePost<MemberAvailability, MemberAvailability>(postTeamMemberAvailability)
+
+    const [availableBlocks, setAvailableBlocks] = useState<Block[]>([])
+    const [preferNotBlocks, setPreferNotBlocks] = useState<Block[]>([])
+
+    useEffect(() => {
+      if (data) {
+        setAvailableBlocks(data.availability.availableBlocks)
+        setPreferNotBlocks(data.availability.preferNotBlocks)
+      }
+    }, [data]);
+
+    useEffect(() => {
+      if (updatedAvailability) {
+        setAvailableBlocks(updatedAvailability.availableBlocks)
+        setPreferNotBlocks(updatedAvailability.preferNotBlocks)
+      }
+    }, [updatedAvailability])
+
+    const handleMemberAvailabilityUpdate = async (updateParams: MemberAvailability): Promise<void> => {
+      // make a post availability request
+      await sendAvailabilityUpdateRequest(updateParams)
+    }
+  
+
+
 
     return (
     <div className="container mx-auto px-4 py-8">
@@ -51,7 +81,7 @@ export default function TeamPage() {
               <CardDescription>Manage team member availability</CardDescription>
             </CardHeader>
             <CardContent>
-              <AvailabilityTab userEmail={data.availability.userEmail} availableBlocks={data.availability.availableBlocks} preferNotBlocks={data.availability.preferNotBlocks} />
+              <AvailabilityTab availableBlocks={availableBlocks} preferNotBlocks={preferNotBlocks} handleUpdate={handleMemberAvailabilityUpdate} />
             </CardContent>
           </Card>
         </TabsContent>

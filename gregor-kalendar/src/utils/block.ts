@@ -86,6 +86,30 @@ export function relativeTimeToAbsolute(day: number, hour: number, quarter: numbe
 
 }
   
+/**
+ * 
+ * @param arr 
+ * @param blocksToAdd 
+ * @returns array of Blocks with every element unique
+ */
+export function addBlocksToArray(arr: Block[], blocksToAdd: Block[]): Block[] {
+	const set = new Set(arr);
+	blocksToAdd.forEach((blk) => set.add(blk));
+	return Array.from(set);
+}
+  
+/**
+ * 
+ * @param arr 
+ * @param blocksToRemove 
+ * @returns array of Blocks with every element unique
+ */
+export function removeBlocksFromArray(arr: Block[], blocksToRemove: Block[]): Block[] {
+	const setToRemove = new Set(blocksToRemove);
+	return arr.filter((blk) => !setToRemove.has(blk));
+}
+  
+
 // Test
   
 // console.log(isValidBlock(0));   // true

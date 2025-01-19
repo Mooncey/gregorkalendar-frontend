@@ -1,8 +1,9 @@
 import { useState, useRef } from "react"
 import { cn } from "../../../lib/utils"
 import { Button } from "../../../components/ui/button"
-import { dayStrings } from "../../../utils/block"
+import { addBlocksToArray, dayStrings, relativeTimeToAbsolute, removeBlocksFromArray } from "../../../utils/block"
 import { Block, MemberAvailability } from "../../../types/types"
+import { AvailabilityParams } from "./AvailabilityTab"
 
 interface TimeSlot {
   day: number
@@ -10,7 +11,13 @@ interface TimeSlot {
   quarter: number
 }
 
-export function AvailabilityGrid({ memberAvailability }: { memberAvailability: MemberAvailability }) {
+export function AvailabilityGrid(params: AvailabilityParams) {
+
+  const { availableBlocks, preferNotBlocks, handleUpdate } = params
+
+  const [draftAvailableBlocks, setDraftAvailableBlocks] = useState<Block[]>(availableBlocks)
+  const [draftPreferNotBlocks, setDraftPreferNotBlocks] = useState<Block[]>(preferNotBlocks)
+
   const [selectedSlots, setSelectedSlots] = useState<Set<string>>(new Set())
   const [isSelecting, setIsSelecting] = useState(false)
   const [selectionStart, setSelectionStart] = useState<TimeSlot | null>(null)
@@ -95,15 +102,67 @@ export function AvailabilityGrid({ memberAvailability }: { memberAvailability: M
   }
 
 
-  //   const handleSaveAvailability = () => {
-  //     // Here you would typically send this to your API
-  //   }
+  const handleSaveAvailability = () => {
+    // Here you would typically send this to your API
+    const updateParams: MemberAvailability = {
+      availableBlocks: draftAvailableBlocks,
+      preferNotBlocks: draftPreferNotBlocks,
+      userEmail: "someone_1@example.com"
+    }
+    handleUpdate(updateParams)
+  }
 
   const handleSelectOption = (option: string) => {
     // Handle the selection logic for the card
     console.log("Selected:", option)
     setIsCardVisible(false)
+
+    const blocksMarked: Block[] = [];
+
+    selectedSlots.forEach((timeString) => {
+      const [day, hour, quarter] = timeString.split('-').map(Number);
+      if (!isNaN(day) && !isNaN(hour) && !isNaN(quarter)) {
+        blocksMarked.push(relativeTimeToAbsolute(day, hour, quarter));
+      } else {
+        console.warn(`Invalid time string: ${timeString}`);
+      }
+    });
+
+    if (option == "available") {
+      handleMarkAvailable(blocksMarked)
+    } else if (option == "unavailable") {
+      handleMarkUnavailable(blocksMarked)
+    } else if (option == "prefer-not") {
+      handleMarkPreferNot(blocksMarked)
+    }
+
+    setSelectedSlots(new Set())
   }
+
+  const handleMarkAvailable = (blocksToAdd: Block[]) => {
+    const newAvail = addBlocksToArray(draftAvailableBlocks, blocksToAdd)
+    setDraftAvailableBlocks(newAvail)
+
+    const newPreferNot = removeBlocksFromArray(draftPreferNotBlocks, blocksToAdd)
+    setDraftPreferNotBlocks(newPreferNot)
+  }
+
+  const handleMarkUnavailable = (blocksToRemove: Block[]) => {
+    const newAvail = removeBlocksFromArray(draftAvailableBlocks, blocksToRemove)
+    setDraftAvailableBlocks(newAvail)
+
+    const newPreferNot = removeBlocksFromArray(draftPreferNotBlocks, blocksToRemove)
+    setDraftPreferNotBlocks(newPreferNot)
+  }
+
+  const handleMarkPreferNot = (blocksToPreferNot: Block[]) => {
+    const newPreferNot = addBlocksToArray(draftPreferNotBlocks, blocksToPreferNot)
+    setDraftPreferNotBlocks(newPreferNot)
+
+    const newAvail = removeBlocksFromArray(draftAvailableBlocks, blocksToPreferNot)
+    setDraftAvailableBlocks(newAvail)
+  }
+
 
   const blockFromSlotKey = (slotKey: string): Block | null => {
     const [day, hour, quarter] = slotKey.split('-').map(Number)
@@ -114,7 +173,7 @@ export function AvailabilityGrid({ memberAvailability }: { memberAvailability: M
   return (
     <div className="w-full max-w-6xl mx-auto p-4">
       <div className="flex justify-between items-center mb-4">
-        <Button onClick={() => console.log("Save Availability")}>Save Availability</Button>
+        <Button onClick={handleSaveAvailability}>Save Availability</Button>
       </div>
 
       <div className="w-full overflow-x-auto">
@@ -147,12 +206,10 @@ export function AvailabilityGrid({ memberAvailability }: { memberAvailability: M
                     {days.map(day => {
                       const slotKey = getSlotKey(day, hour, quarter)
                       const block = blockFromSlotKey(slotKey)
-                      //console.log("block:" + block)
-                      const isAvailable = block !== null && memberAvailability && memberAvailability.availableBlocks.includes(block)
-                      const isPreferNot = block !== null && memberAvailability && memberAvailability.preferNotBlocks.includes(block)
-                      console.log("memAvail" + memberAvailability)
-                      //console.log("isAvailable:" + isAvailable)
-                      //console.log("isPreferNot:" + isPreferNot)
+
+                      const isAvailable = block !== null && draftAvailableBlocks.includes(block)
+                      const isPreferNot = block !== null && draftPreferNotBlocks.includes(block)
+
                       return (
                         <div
                           key={`${day}-${hour}-${quarter}`}
