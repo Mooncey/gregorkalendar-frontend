@@ -93,3 +93,26 @@ Occurs when member submits any changes to their availability,
   - It returns response code 200 for a successful update and saving of member availability for member `email` within the specified `teamId`. 
 - For an Error Code Response, this occurs when:
   - From any error, such as an error while saving, 
+
+## Post Slot Request
+
+- Request Example: ``postSlot.json``
+- Response Example: ``slotResponse.json``
+
+Sends all info related to a single newly created slot, but we want to receive ALL created slots (including the new one) in the team.
+- Make sure to generate a new ID for the posted slot.
+
+## Put Schedule Request
+
+- Request Example: ``putSchedule.json``
+- Response Example: ``scheduleResponse.json``
+
+Request that a schedule gets generated for the given team with ``teamId``.
+
+Schedule starts as null when a team has been created but has never generated for the team.
+
+- For an OK response:
+  - Send back one entire schedule of all slot assignments
+- For an Error Code Response, this occurs when:
+  - Not possible to create a schedule, either because slots could not be filled, members all reached capacity, or not enough members did not have enough availability.
+

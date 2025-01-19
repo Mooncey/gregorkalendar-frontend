@@ -1,0 +1,42 @@
+{
+	"teamId": 110,
+	"slots": {
+		"slots": [
+			{
+				"name": "L2D",
+				"slotId": 4,
+				"numMembers": 3,
+				"startBlock": 34,
+				"endBlock": 40
+			},
+			{
+				"name": "L2E",
+				"slotId": 6,
+				"numMembers": 3,
+				"startBlock": 18,
+				"endBlock": 24
+			},
+			{
+				"name": "L2G",
+				"slotId": 7,
+				"numMembers": 2,
+				"startBlock": 20,
+				"endBlock": 25
+			},
+			{
+				"name": "L2H",
+				"slotId": 9,
+				"numMembers": 3,
+				"startBlock": 600,
+				"endBlock": 601
+			},
+			{
+				"name": "L2A",
+				"slotId": 11,
+				"numMembers": 2,
+				"startBlock": 34,
+				"endBlock": 40
+			}
+		]
+	}
+}

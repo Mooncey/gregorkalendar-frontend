@@ -6,7 +6,10 @@ interface UseFetchResult<T> {
   error: Error | null;
 }
 
-export function useFetch<T>(fetchFunction: () => Promise<T>): UseFetchResult<T> {
+export function useFetch<T, Args>(
+  fetchFunction: (args: Args) => Promise<T>,
+  args: Args
+): UseFetchResult<T> {
   const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
@@ -15,7 +18,7 @@ export function useFetch<T>(fetchFunction: () => Promise<T>): UseFetchResult<T> 
     const fetchData = async () => {
       try {
         setIsLoading(true);
-        const result = await fetchFunction();
+        const result = await fetchFunction(args);
         setData(result);
       } catch (err) {
         setError(err as Error);
@@ -25,7 +28,7 @@ export function useFetch<T>(fetchFunction: () => Promise<T>): UseFetchResult<T> 
     };
 
     fetchData();
-  }, [fetchFunction]);
+  }, [fetchFunction, args]);
 
   return { data, isLoading, error };
 }

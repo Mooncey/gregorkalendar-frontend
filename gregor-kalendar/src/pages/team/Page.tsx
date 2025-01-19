@@ -5,12 +5,20 @@ import { getTeam } from "../../services/getTeam";
 import { useFetch } from "../../services/useFetch";
 import TeamInfoTab from "./components/TeamInfoTab";
 import AvailabilityTab from "./components/AvailabilityTab";
+import { useMemo } from "react";
 
 export default function TeamPage() {
-  
-    const { data, isLoading, error } = useFetch(getTeam);
 
     const { id } = useParams();
+
+    // Stabilize the fetch parameters using useMemo
+    const fetchParams = useMemo(() => ({
+      teamId: parseInt(id ?? '0', 10), // Parse `id` only once
+      userEmail: "john@example.com"
+    }), [id]);
+    
+    const { data, isLoading, error } = useFetch(getTeam, fetchParams);
+
     console.log(id)
 
     return (
@@ -45,7 +53,7 @@ export default function TeamPage() {
               <CardDescription>Manage team member availability</CardDescription>
             </CardHeader>
             <CardContent>
-              <AvailabilityTab avilability={data.availibility} />
+              {/* <AvailabilityTab avilability={data.availibility} /> */}
             </CardContent>
           </Card>
         </TabsContent>

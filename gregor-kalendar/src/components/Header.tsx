@@ -6,8 +6,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu"
-import { Calendar, LogOut, Settings, User } from 'lucide-react'
+import { LogOut, Settings, User } from 'lucide-react'
 import { Link } from "react-router-dom"
+import GregorLogo from "../assets/images/gregor-kiczales.png"
 
 export function Header() {
   return (
@@ -15,7 +16,7 @@ export function Header() {
       <div className="container flex h-14 items-center justify-between">
         <div className="flex items-center gap-4">
           <Link to="/dashboard" className="flex items-center gap-2">
-            <Calendar className="h-5 w-5" />
+          <img src={ GregorLogo } alt="nwHacks Scheduler Logo" className="h-5 w-5" />
             <span className="font-semibold">nwHacks Scheduler</span>
           </Link>
         </div>

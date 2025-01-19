@@ -9,7 +9,7 @@ import { Skeleton } from "../../../components/ui/skeleton"
 export function TeamList() {
 
 
-  const { data, isLoading, error } = useFetch(getUserTeams);
+  const { data, isLoading, error } = useFetch(getUserTeams, "john@example.com");
 
   return (
     <div className="container py-6">
