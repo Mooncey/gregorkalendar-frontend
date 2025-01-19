@@ -3,8 +3,8 @@ import { AvailabilityGrid } from "./AvailabilityGrid";
 
 
 export interface AvailabilityParams {
-  availableBlocks: Block[],
-  preferNotBlocks: Block[],
+  availableBlocks: Block[] | null,
+  preferNotBlocks: Block[] | null,
   handleUpdate: (updateParams: MemberAvailability) => Promise<void>;
 }
 

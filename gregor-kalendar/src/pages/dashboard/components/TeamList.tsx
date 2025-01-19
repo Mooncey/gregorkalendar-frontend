@@ -11,7 +11,9 @@ export function TeamList() {
 
   // const { data, isLoading, error } = useFetch(getUserTeams, "john@example.com");
 
-  const { data, isLoading, error } = useFetch(getUserTeams, "gregor@cs.ubc.ca");
+  const user = JSON.parse(localStorage.getItem('apiData') ?? "{\"name\":\"Emily Fuchs\",\"email\":\"emilyef@ubc.ca\"}");
+
+  const { data, isLoading, error } = useFetch(getUserTeams, user.email);
 
   return (
     <div className="container py-6">

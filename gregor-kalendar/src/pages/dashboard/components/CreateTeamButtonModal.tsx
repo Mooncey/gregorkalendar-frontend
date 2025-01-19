@@ -23,12 +23,14 @@ export function CreateTeamButtonModal() {
   const [teamName, setTeamName] = useState('')
   const [open, setOpen] = useState(false)
 
+  const user = JSON.parse(localStorage.getItem('apiData') ?? "{\"name\":\"Emily Fuchs\",\"email\":\"emilyef@ubc.ca\"}");
+
   const { data, isLoading, error, sendRequest } = usePost<CreateTeamResponse, CreateTeamRequest>(createTeam)
 
   const handleCreate = () => {
 
     const requestBody: CreateTeamRequest = {
-      userEmail: "gregor@cs.ubc.ca",
+      userEmail: user.email,
       teamName: teamName
     }
 
@@ -73,7 +75,7 @@ export function CreateTeamButtonModal() {
                 <AvatarImage src="/placeholder-user.jpg" alt="@johndoe" />
                 <AvatarFallback><User /></AvatarFallback>
               </Avatar>
-              <span>Gregor Kiczales</span>
+              <span>{user.name}</span>
             </div>
           </div>
         </div>

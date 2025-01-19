@@ -17,10 +17,12 @@ export default function TeamPage() {
 
     const { id } = useParams();
 
+    const user = JSON.parse(localStorage.getItem('apiData') ?? "{\"name\":\"Emily Fuchs\",\"email\":\"emilyef@ubc.ca\"}");
+
     // Stabilize the fetch parameters using useMemo
     const fetchParams = useMemo(() => ({
       teamId: parseInt(id ?? '0', 0), // Parse `id` only once
-      userEmail: "gregor@cs.ubc.ca"
+      userEmail: user.email
     }), [id]);
     
     const { data, isLoading, error } = useFetch(getTeam, fetchParams);
@@ -53,7 +55,7 @@ export default function TeamPage() {
 
       const postUpdateParams: PostTeamMemberAvailabilityRequest = {
         teamId: parseInt(id ?? '0'),
-        userEmail: "susan@ubc.ca",
+        userEmail: user.email,
         availableBlocks: updateAvailBlocks,
         preferNotBlocks: updatePreferBlocks,
       }

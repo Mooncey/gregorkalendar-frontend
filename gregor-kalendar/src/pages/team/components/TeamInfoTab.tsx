@@ -10,7 +10,10 @@ export default function TeamInfoTab(teamInfo: {teamInfo: TeamInfo}) {
 
   const [leaders, setLeaders] = useState<User[]>(teamInfo.teamInfo.leaders)
   // const [members, setMembers] = useState<User[]>(teamInfo.teamInfo.members)
+  
+  const currentUser = JSON.parse(localStorage.getItem('apiData') ?? "{\"name\":\"Emily Fuchs\",\"email\":\"emilyef@ubc.ca\"}");
 
+  const isLeader = teamInfo.teamInfo.leaders.some(user => user.email === currentUser.email);
 
   return (
           <Card>
@@ -23,7 +26,7 @@ export default function TeamInfoTab(teamInfo: {teamInfo: TeamInfo}) {
                 <div>
                   <div className="flex justify-between items-center mb-2">
                     <h3 className="text-xl font-semibold">Team Leaders</h3>
-                    <AddLeaderButtonModal setLeaders={setLeaders} leaders={leaders}  />
+                    {isLeader &&<AddLeaderButtonModal setLeaders={setLeaders} leaders={leaders}  />}
                   </div>
                   <Table>
                     <TableHeader>
@@ -46,7 +49,7 @@ export default function TeamInfoTab(teamInfo: {teamInfo: TeamInfo}) {
                 <div>
                   <div className="flex justify-between items-center mb-2">
                     <h3 className="text-xl font-semibold">Team Members</h3>
-                    <AddMemberButtonModal />
+                    {isLeader && <AddMemberButtonModal />}
                   </div>
                   <Table>
                     <TableHeader>

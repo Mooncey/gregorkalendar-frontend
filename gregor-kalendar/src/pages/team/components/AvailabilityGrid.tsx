@@ -13,6 +13,8 @@ interface TimeSlot {
 
 export function AvailabilityGrid(params: AvailabilityParams) {
 
+  const user = JSON.parse(localStorage.getItem('apiData') ?? "{\"name\":\"Emily Fuchs\",\"email\":\"emilyef@ubc.ca\"}");
+
   const { availableBlocks, preferNotBlocks, handleUpdate } = params
 
   const [draftAvailableBlocks, setDraftAvailableBlocks] = useState<Block[]>(availableBlocks)
@@ -107,7 +109,7 @@ export function AvailabilityGrid(params: AvailabilityParams) {
     const updateParams: MemberAvailability = {
       availableBlocks: draftAvailableBlocks,
       preferNotBlocks: draftPreferNotBlocks,
-      userEmail: "susan@ubc.ca"
+      userEmail: user.email
     }
     handleUpdate(updateParams)
   }

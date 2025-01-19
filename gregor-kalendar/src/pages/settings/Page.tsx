@@ -5,8 +5,9 @@ import { Label } from "../../components/ui/label"
 import { Separator } from "../../components/ui/separator"
 
 export default function SettingsPage() {
-  const [name, setName] = useState('Gregor Kiczales')
-  const [email] = useState('gregor@cs.ubc.ca')
+  const user = JSON.parse(localStorage.getItem('apiData') ?? "{\"name\":\"Emily Fuchs\",\"email\":\"emilyef@ubc.ca\"}");
+  const [name, setName] = useState(user.name)
+  const [email] = useState(user.email)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
