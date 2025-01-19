@@ -12,12 +12,12 @@ import GregorLogo from "../assets/images/gregor-kiczales.png"
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex justify-center">
       <div className="container flex h-14 items-center justify-between">
         <div className="flex items-center gap-4">
           <Link to="/dashboard" className="flex items-center gap-2">
-          <img src={ GregorLogo } alt="nwHacks Scheduler Logo" className="h-5 w-5" />
-            <span className="font-semibold">nwHacks Scheduler</span>
+            <img src={GregorLogo} alt="Gregor Kalendar Logo" className="h-5 w-5" />
+            <span className="font-semibold text-black">GregorKalendar</span>
           </Link>
         </div>
 
