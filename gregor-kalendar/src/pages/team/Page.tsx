@@ -1,10 +1,11 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card"
 import { useParams } from "react-router-dom";
 
 export default function TeamPage() {
 
     const { id } = useParams();
+    console.log(id)
 
     return (
     <div className="container mx-auto px-4 py-8">

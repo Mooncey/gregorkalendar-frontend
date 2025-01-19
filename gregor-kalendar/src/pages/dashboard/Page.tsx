@@ -1,4 +1,3 @@
-import { Header } from "../../components/Header"
 import { TeamList } from "./components/TeamList"
 
 export default function DashboardPage() {

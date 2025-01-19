@@ -1,8 +1,6 @@
-import { Plus } from 'lucide-react'
-
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
+import { Card } from "../../../components/ui/card"
 import { Link } from 'react-router-dom'
+import { CreateTeamButtonModal } from './CreateTeamButtonModal'
 
 interface Team {
   id: string
@@ -24,10 +22,7 @@ export function TeamList() {
     <div className="container py-6">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-bold">Teams</h2>
-        <Button>
-          <Plus className="mr-2 h-4 w-4" />
-          Create Team
-        </Button>
+        <CreateTeamButtonModal />
       </div>
       <div className="grid gap-4">
         {teams.map((team) => (
