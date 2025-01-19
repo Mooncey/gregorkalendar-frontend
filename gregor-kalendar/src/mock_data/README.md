@@ -1,4 +1,4 @@
-## Teams Request
+## Member Teams Request
 
 - Request Example:
 ```json
@@ -6,7 +6,7 @@
         "userEmail": "gregor@cs.ubc.ca"
     }
 ```
-- Response Example: ``teams.json``
+- Response Example: ``memberTeams.json``
 
 - Given a request object of userEmail, the response object gives all the teams the user belongs to.
 - This is for the dashboard page that returns all teams that the user belongs in either as a leader or member.
