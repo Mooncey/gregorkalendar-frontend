@@ -1,28 +1,17 @@
-import { useEffect, useState } from "react";
 import { TeamList } from "./components/TeamList"
-import { getMemberTeams } from "../../services/getMemberTeams";
+// import { getMemberTeams } from "../../services/getMemberTeams";
+// import { useFetch } from "../../services/useFetch";
 
 export default function DashboardPage() {
-  const [message, setMessage] = useState<string>('');
+  // const { data, isLoading, error } = useFetch(getMemberTeams);
 
-  useEffect(() => {
-    // Fetch data on component mount
-    const getData = async () => {
-      try {
-        const data = await getMemberTeams();
-        setMessage(data.message);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    getData();
-  }, []);
 
   return (
     <div className="min-h-screen bg-slate-50">
+      {/* {isLoading && <h1>Loading...</h1>}
+      {error && <h1>Error: {error.message}</h1>}
+      {data && <h1>Message: {data.teams[0].teamName}</h1>} */}
       <TeamList />
-      <h1>{message}</h1>
     </div>
   )
 }

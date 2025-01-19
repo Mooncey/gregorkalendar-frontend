@@ -1,23 +1,16 @@
 import { Card } from "../../../components/ui/card"
 import { Link } from 'react-router-dom'
 import { CreateTeamButtonModal } from './CreateTeamButtonModal'
+import { useFetch } from "../../../services/useFetch"
+import { getUserTeams } from "../../../services/getUserTeams"
+import { Skeleton } from "../../../components/ui/skeleton"
 
-interface Team {
-  id: string
-  name: string
-}
-
-const teams: Team[] = [
-  { id: "1", name: "My Awesome Team" },
-  { id: "2", name: "Frontend Team" },
-  { id: "3", name: "Backend Team" },
-  { id: "4", name: "CPSC 110" },
-  { id: "5", name: "Leadership Team" },
-  { id: "6", name: "Gregor Kiczales Lovers" },
-  { id: "7", name: "Gregor Fans" },
-]
 
 export function TeamList() {
+
+
+  const { data, isLoading, error } = useFetch(getUserTeams);
+
   return (
     <div className="container py-6">
       <div className="flex items-center justify-between mb-6">
@@ -25,10 +18,13 @@ export function TeamList() {
         <CreateTeamButtonModal />
       </div>
       <div className="grid gap-4">
-        {teams.map((team) => (
-          <Link key={team.id} to={`/team/${team.id}`}>
+        {
+          isLoading && <Skeleton className="h-[125px] w-full rounded-xl" />
+        }
+        {data?.teams.map((team) => (
+          <Link key={team.teamId} to={`/team/${team.teamId}`}>
             <Card className="p-4 hover:bg-blue-50 transition-colors cursor-pointer">
-              <h3 className="text-lg font-medium">{team.name}</h3>
+              <h3 className="text-lg font-medium">{team.teamName}</h3>
             </Card>
           </Link>
         ))}

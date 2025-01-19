@@ -1,8 +1,13 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui/card"
 import { useParams } from "react-router-dom";
+import { getTeam } from "../../services/getTeam";
+import { useFetch } from "../../services/useFetch";
+import TeamInfoTab from "./components/TeamInfoTab";
 
 export default function TeamPage() {
+  
+    const { data, isLoading, error } = useFetch(getTeam);
 
     const { id } = useParams();
     console.log(id)
@@ -11,7 +16,8 @@ export default function TeamPage() {
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-6">Team Dashboard</h1>
       
-      <Tabs defaultValue="schedule" className="w-full">
+      {data &&
+      (<Tabs defaultValue="schedule" className="w-full">
         <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="schedule">Schedule</TabsTrigger>
           <TabsTrigger value="availability">Availability</TabsTrigger>
@@ -56,17 +62,9 @@ export default function TeamPage() {
         </TabsContent>
         
         <TabsContent value="team-info">
-          <Card>
-            <CardHeader>
-              <CardTitle>Team Info</CardTitle>
-              <CardDescription>View team members and information</CardDescription>
-            </CardHeader>
-            <CardContent>
-              {/* Team info content will be added here */}
-            </CardContent>
-          </Card>
+          <TeamInfoTab teamInfo={data.teamInfo} />
         </TabsContent>
-      </Tabs>
+      </Tabs>)}
     </div>
   )
 }

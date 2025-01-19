@@ -65,3 +65,20 @@
   - ``slots`` is the same for any user of the team that requests it
   - ``teamInfo`` is the same for any user of the team that requests it
 
+## Post Member Request
+
+- Request Example: ``postMember.json``
+
+- For an OK Response:
+  - It returns response code 200 for a successful addition of the member to the team with the specified ``teamId``
+- For an Error Code Response, this occurs when:
+  - Adding a member was attempted, but the member's ``email`` already exists within the team of the specified ``teamId`` (Either within the leaders or the members).
+
+## Post Leader Request
+
+- Request Example: ``postLeader.json``
+
+- For an OK Response:
+  - It returns response code 200 for a successful addition of the leader to the team with the specified ``teamId``
+- For an Error Code Response, this occurs when:
+  - Adding a leader was attempted, but the leader's ``email`` already exists within the team of the specified ``teamId`` (Either within the leaders or the members).
