@@ -16,8 +16,10 @@ COPY . .
 # Build the Vite application
 RUN npm run dev -- build
 
+RUN npm install -g serve
+
 # Expose the port the app runs on
 EXPOSE 3000
 
 # Command to run the application
-CMD ["npm", "run", "serve"]
+CMD ["server", "-s", "dist"]
