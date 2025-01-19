@@ -101,7 +101,6 @@ export interface PostLeaderRequest {
 
 }
 
-// Likely redundant since it's identical to PostLeader
 export interface PostLeaderResponse {
 
 	teamId: number;
@@ -118,11 +117,23 @@ export interface PostMemberRequest {
 
 }
 
-// Likely redundant since it's identical to PostMember
 export interface PostMemberResponse {
 
 	teamId: number;
 
 	member: User;
+
+}
+
+export interface CreateTeamRequest {
+
+	userEmail: string,
+
+	teamName: string
+}
+
+export interface CreateTeamResponse {
+
+	teamId: number
 
 }

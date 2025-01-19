@@ -13,16 +13,33 @@ import {
 import { Label } from "../../../components/ui/label"
 import { Avatar, AvatarFallback, AvatarImage } from "../../../components/ui/avatar"
 import { Plus, User } from 'lucide-react'
+import { CreateTeamRequest, CreateTeamResponse } from '../../../types/apiTypes'
+import { createTeam } from '../../../services/createTeam'
+import { usePost } from '../../../services/usePost'
+
+
 
 export function CreateTeamButtonModal() {
   const [teamName, setTeamName] = useState('')
   const [open, setOpen] = useState(false)
 
+  const { data, isLoading, error, sendRequest } = usePost<CreateTeamResponse, CreateTeamRequest>(createTeam)
+
   const handleCreate = () => {
-    // TODO: Implement team creation logic here
+
+    const requestBody: CreateTeamRequest = {
+      userEmail: "gregor@cs.ubc.ca",
+      teamName: teamName
+    }
+
+    sendRequest(requestBody)
+
+
     console.log('Creating team:', teamName)
     setOpen(false)
     setTeamName('')
+
+    window.location.href=window.location.href
   }
 
   return (

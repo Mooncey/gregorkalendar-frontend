@@ -9,7 +9,9 @@ import { Skeleton } from "../../../components/ui/skeleton"
 export function TeamList() {
 
 
-  const { data, isLoading, error } = useFetch(getUserTeams, "john@example.com");
+  // const { data, isLoading, error } = useFetch(getUserTeams, "john@example.com");
+
+  const { data, isLoading, error } = useFetch(getUserTeams, "gregor@cs.ubc.ca");
 
   return (
     <div className="container py-6">

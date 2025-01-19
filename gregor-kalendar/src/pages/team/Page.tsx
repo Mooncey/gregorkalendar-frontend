@@ -20,7 +20,7 @@ export default function TeamPage() {
     // Stabilize the fetch parameters using useMemo
     const fetchParams = useMemo(() => ({
       teamId: parseInt(id ?? '0', 0), // Parse `id` only once
-      userEmail: "susan@ubc.ca"
+      userEmail: "gregor@cs.ubc.ca"
     }), [id]);
     
     const { data, isLoading, error } = useFetch(getTeam, fetchParams);
