@@ -2,6 +2,7 @@ import { useState, useRef } from "react"
 import { cn } from "../../../lib/utils"
 import { Button } from "../../../components/ui/button"
 import { dayStrings } from "../../../utils/block"
+import { Block, MemberAvailability } from "../../../types/types"
 
 interface TimeSlot {
   day: number
@@ -9,7 +10,7 @@ interface TimeSlot {
   quarter: number
 }
 
-export function AvailabilityGrid() {
+export function AvailabilityGrid({ memberAvailability }: { memberAvailability: MemberAvailability }) {
   const [selectedSlots, setSelectedSlots] = useState<Set<string>>(new Set())
   const [isSelecting, setIsSelecting] = useState(false)
   const [selectionStart, setSelectionStart] = useState<TimeSlot | null>(null)
@@ -22,11 +23,7 @@ export function AvailabilityGrid() {
   const quarters = [0, 15, 30, 45]
   const days = [0, 1, 2, 3, 4, 5, 6]
 
-//   const formatHour = (hour: number) => {
-//     return `${hour.toString().padStart(2, "0")}:00`
-//   }
-
-  const getSlotKey = (day: number, hour: number, quarter: number) => 
+  const getSlotKey = (day: number, hour: number, quarter: number) =>
     `${day}-${hour}-${quarter}`
 
   const handleMouseDown = (day: number, hour: number, quarter: number) => {
@@ -36,16 +33,16 @@ export function AvailabilityGrid() {
     setIsSelecting(true)
     setSelectionStart({ day, hour, quarter })
     lastHovered.current = { day, hour, quarter }
-    
+
     const slotKey = getSlotKey(day, hour, quarter)
     const newSelection = new Set(selectedSlots)
-    
+
     if (selectedSlots.has(slotKey)) {
       newSelection.delete(slotKey)
     } else {
       newSelection.add(slotKey)
     }
-    
+
     setSelectedSlots(newSelection)
   }
 
@@ -83,12 +80,12 @@ export function AvailabilityGrid() {
   const handleMouseUp = () => {
     setIsSelecting(false)
     setSelectionStart(null)
-  
+
     if (lastHovered.current) {
       const slotElement = document.querySelector(
         `[data-slot-key="${getSlotKey(lastHovered.current.day, lastHovered.current.hour, lastHovered.current.quarter)}"]`
       )
-  
+
       if (slotElement) {
         const rect = slotElement.getBoundingClientRect()
         setCardPosition({ top: rect.bottom + window.scrollY, left: rect.left + window.scrollX })
@@ -96,16 +93,22 @@ export function AvailabilityGrid() {
       }
     }
   }
-  
 
-//   const handleSaveAvailability = () => {
-//     // Here you would typically send this to your API
-//   }
+
+  //   const handleSaveAvailability = () => {
+  //     // Here you would typically send this to your API
+  //   }
 
   const handleSelectOption = (option: string) => {
     // Handle the selection logic for the card
     console.log("Selected:", option)
     setIsCardVisible(false)
+  }
+
+  const blockFromSlotKey = (slotKey: string): Block | null => {
+    const [day, hour, quarter] = slotKey.split('-').map(Number)
+    if (day === undefined || hour === undefined || quarter === undefined) return null
+    return day * 96 + hour * 4 + quarter / 15 as Block
   }
 
   return (
@@ -141,20 +144,31 @@ export function AvailabilityGrid() {
                 </div>
                 {quarters.map(quarter => (
                   <div key={`${hour}-${quarter}`} className="contents">
-                    {days.map(day => (
-                      <div
-                        key={`${day}-${hour}-${quarter}`}
-                        data-slot-key={getSlotKey(day, hour, quarter)}
-                        className={cn(
-                          "border-r border-t h-4 transition-colors",
-                          "cursor-pointer hover:bg-muted/50",
-                          selectedSlots.has(getSlotKey(day, hour, quarter)) && "bg-primary/20",
-                          quarter === 0 && "border-t-muted-foreground"
-                        )}
-                        onMouseDown={() => handleMouseDown(day, hour, quarter)}
-                        onMouseEnter={() => handleMouseEnter(day, hour, quarter)}
-                      />
-                    ))}
+                    {days.map(day => {
+                      const slotKey = getSlotKey(day, hour, quarter)
+                      const block = blockFromSlotKey(slotKey)
+                      //console.log("block:" + block)
+                      const isAvailable = block !== null && memberAvailability && memberAvailability.availableBlocks.includes(block)
+                      const isPreferNot = block !== null && memberAvailability && memberAvailability.preferNotBlocks.includes(block)
+                      console.log("memAvail" + memberAvailability)
+                      //console.log("isAvailable:" + isAvailable)
+                      //console.log("isPreferNot:" + isPreferNot)
+                      return (
+                        <div
+                          key={`${day}-${hour}-${quarter}`}
+                          data-slot-key={getSlotKey(day, hour, quarter)}
+                          className={cn(
+                            "border-r border-t h-4 transition-colors",
+                            "cursor-pointer hover:bg-muted/50",
+                            isAvailable && "bg-green-300", // Green for available
+                            isPreferNot && "bg-orange-300", // Orange for prefer-not
+                            selectedSlots.has(getSlotKey(day, hour, quarter)) && "bg-primary/20",
+                            quarter === 0 && "border-t-muted-foreground"
+                          )}
+                          onMouseDown={() => handleMouseDown(day, hour, quarter)}
+                          onMouseEnter={() => handleMouseEnter(day, hour, quarter)}
+                        />)
+                    })}
                   </div>
                 ))}
               </div>

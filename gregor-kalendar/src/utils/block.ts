@@ -88,20 +88,20 @@ export function relativeTimeToAbsolute(day: number, hour: number, quarter: numbe
   
 // Test
   
-console.log(isValidBlock(0));   // true
-console.log(isValidBlock(672)); // false
+// console.log(isValidBlock(0));   // true
+// console.log(isValidBlock(672)); // false
 
-console.log(blockToTime(0)); // [["Sunday", "00:00"], ["Sunday", "00:15"]]
-console.log(blockToTime(95)); // [["Sunday", "23:45"], ["Monday", "00:00"]]
+// console.log(blockToTime(0)); // [["Sunday", "00:00"], ["Sunday", "00:15"]]
+// console.log(blockToTime(95)); // [["Sunday", "23:45"], ["Monday", "00:00"]]
 
-console.log(rangeToBlocks(0, 5)); // [0, 1, 2, 3, 4, 5]
-console.log(rangeToBlocks(94, 96)); // [94, 95, 96]
+// console.log(rangeToBlocks(0, 5)); // [0, 1, 2, 3, 4, 5]
+// console.log(rangeToBlocks(94, 96)); // [94, 95, 96]
 
-console.log(rangeToTime(0, 95)); // [["Sunday", "00:00"], ["Monday", "00:00"]]
-console.log(rangeToTime(94, 96)); // [["Sunday", "23:30"], ["Monday", "00:15"]]
+// console.log(rangeToTime(0, 95)); // [["Sunday", "00:00"], ["Monday", "00:00"]]
+// console.log(rangeToTime(94, 96)); // [["Sunday", "23:30"], ["Monday", "00:15"]]
 
-console.log(relativeTimeToAbsolute(0, 0, 15)); // 1
-console.log(relativeTimeToAbsolute(0, 0, 45)); // 3
-console.log(relativeTimeToAbsolute(0, 3, 15)); // 12
-console.log(relativeTimeToAbsolute(1, 0, 0));  // 96
-console.log(relativeTimeToAbsolute(6, 23, 45)); // 671
+// console.log(relativeTimeToAbsolute(0, 0, 15)); // 1
+// console.log(relativeTimeToAbsolute(0, 0, 45)); // 3
+// console.log(relativeTimeToAbsolute(0, 3, 15)); // 12
+// console.log(relativeTimeToAbsolute(1, 0, 0));  // 96
+// console.log(relativeTimeToAbsolute(6, 23, 45)); // 671

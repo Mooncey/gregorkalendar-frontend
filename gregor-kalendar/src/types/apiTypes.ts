@@ -30,7 +30,7 @@ export interface GetTeamResponse {
 
 	schedule: TeamSchedule;
 	
-	availibility: MemberAvailability;
+	availability: MemberAvailability;
 
 	slots: TeamSlots;
 

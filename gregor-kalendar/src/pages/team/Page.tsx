@@ -13,13 +13,11 @@ export default function TeamPage() {
 
     // Stabilize the fetch parameters using useMemo
     const fetchParams = useMemo(() => ({
-      teamId: parseInt(id ?? '0', 10), // Parse `id` only once
-      userEmail: "john@example.com"
+      teamId: parseInt(id ?? '0', 0), // Parse `id` only once
+      userEmail: "someone_1@example.com"
     }), [id]);
     
     const { data, isLoading, error } = useFetch(getTeam, fetchParams);
-
-    console.log(id)
 
     return (
     <div className="container mx-auto px-4 py-8">
@@ -53,7 +51,7 @@ export default function TeamPage() {
               <CardDescription>Manage team member availability</CardDescription>
             </CardHeader>
             <CardContent>
-              {/* <AvailabilityTab avilability={data.availibility} /> */}
+              <AvailabilityTab userEmail={data.availability.userEmail} availableBlocks={data.availability.availableBlocks} preferNotBlocks={data.availability.preferNotBlocks} />
             </CardContent>
           </Card>
         </TabsContent>
