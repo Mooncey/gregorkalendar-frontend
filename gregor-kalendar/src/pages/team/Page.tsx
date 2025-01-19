@@ -11,6 +11,7 @@ import { usePost } from "../../services/usePost";
 import { postTeamMemberAvailability } from "../../services/postTeamMemberAvailability";
 import { PostTeamMemberAvailabilityRequest, PostTeamMemberAvailabilityResponse } from "../../types/apiTypes";
 import ScheduleTab from "./components/ScheduleTab";
+import SlotsTab from "./components/SlotsTab";
 
 export default function TeamPage() {
 
@@ -19,7 +20,7 @@ export default function TeamPage() {
     // Stabilize the fetch parameters using useMemo
     const fetchParams = useMemo(() => ({
       teamId: parseInt(id ?? '0', 0), // Parse `id` only once
-      userEmail: "someone_1@example.com"
+      userEmail: "susan@ubc.ca"
     }), [id]);
     
     const { data, isLoading, error } = useFetch(getTeam, fetchParams);
@@ -52,7 +53,7 @@ export default function TeamPage() {
 
       const postUpdateParams: PostTeamMemberAvailabilityRequest = {
         teamId: parseInt(id ?? '0'),
-        userEmail: "someone_1@example.com",
+        userEmail: "susan@ubc.ca",
         availableBlocks: updateAvailBlocks,
         preferNotBlocks: updatePreferBlocks,
       }
@@ -93,15 +94,7 @@ export default function TeamPage() {
         </TabsContent>
         
         <TabsContent value="slots">
-          <Card>
-            <CardHeader>
-              <CardTitle>Slots</CardTitle>
-              <CardDescription>Set slots for team assignments</CardDescription>
-            </CardHeader>
-            <CardContent>
-              {/* Slots content will be added here */}
-            </CardContent>
-          </Card>
+          <SlotsTab slots={data.slots} />
         </TabsContent>
         
         <TabsContent value="team-info">

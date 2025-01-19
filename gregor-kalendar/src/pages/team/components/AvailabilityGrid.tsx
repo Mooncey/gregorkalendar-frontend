@@ -107,7 +107,7 @@ export function AvailabilityGrid(params: AvailabilityParams) {
     const updateParams: MemberAvailability = {
       availableBlocks: draftAvailableBlocks,
       preferNotBlocks: draftPreferNotBlocks,
-      userEmail: "someone_1@example.com"
+      userEmail: "susan@ubc.ca"
     }
     handleUpdate(updateParams)
   }

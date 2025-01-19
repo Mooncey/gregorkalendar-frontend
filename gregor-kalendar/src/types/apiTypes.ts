@@ -1,4 +1,4 @@
-import { User, MemberAvailability, TeamSchedule, TeamSlots, Block } from "./types";
+import { User, MemberAvailability, TeamSchedule, TeamSlots, Block, Slot } from "./types";
 
 export interface UserTeam {
 
@@ -35,7 +35,7 @@ export interface GetTeamResponse {
 	
 	availability: MemberAvailability;
 
-	slots: TeamSlots;
+	slots: Slot[];
 
 	teamInfo: TeamInfo;
 

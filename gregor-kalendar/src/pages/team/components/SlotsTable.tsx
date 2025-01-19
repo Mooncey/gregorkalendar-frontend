@@ -1,0 +1,80 @@
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "../../../components/ui/table"
+import { AddSlotButtonModal } from "./AddSlotButtonModal"
+import { Slot } from "../../../types/types"
+import { rangeToTime } from "../../../utils/block"
+
+
+const initialSlots: Slot[] = [
+    {
+        slotId: 1,
+        name: "L1A",
+        numMembers: 3,
+        startBlock: 50,
+        endBlock: 60,
+    },
+    {
+        slotId: 2,
+        name: "L1B",
+        numMembers: 3,
+        startBlock: 90,
+        endBlock: 100,
+    },
+    {
+        slotId: 3,
+        name: "L1C",
+        numMembers: 3,
+        startBlock: 500,
+        endBlock: 550,
+    },
+]
+
+export default function SlotsTable({ slots } : { slots: Slot[] }) {
+
+    return (
+        <div className="space-y-4">
+            <div className="flex justify-between items-center">
+                <h2 className="text-2xl font-bold">Slots</h2>
+                <AddSlotButtonModal />
+            </div>
+            <div className="rounded-md border">
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead>Slot Name</TableHead>
+                            <TableHead>Start Day</TableHead>
+                            <TableHead>Start Time</TableHead>
+                            <TableHead>End Day</TableHead>
+                            <TableHead>End Time</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {slots.map((slot) => {
+                            const range = rangeToTime(slot.startBlock, slot.endBlock)
+                            const startDay = range[0][0]
+                            const startTime = range[0][1]
+                            const endDay = range[1][0]
+                            const endTime = range[1][1]
+                            return (
+                                <TableRow key={slot.slotId}>
+                                    <TableCell>{slot.name}</TableCell>
+                                    <TableCell>{startDay}</TableCell>
+                                    <TableCell>{startTime}</TableCell>
+                                    <TableCell>{endDay}</TableCell>
+                                    <TableCell>{endTime}</TableCell>
+                                </TableRow>
+                            )
+                        })}
+                    </TableBody>
+                </Table>
+            </div>
+        </div>
+    )
+}
+
