@@ -8,13 +8,17 @@ interface UseFetchResult<T> {
 
 export function useFetch<T, Args>(
   fetchFunction: (args: Args) => Promise<T>,
-  args: Args
+  args: Args,
+  enabled: boolean = true // optional enabled parameter
 ): UseFetchResult<T> {
   const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
+
+    if (!enabled) return;
+
     const fetchData = async () => {
       try {
         setIsLoading(true);
@@ -28,7 +32,7 @@ export function useFetch<T, Args>(
     };
 
     fetchData();
-  }, [fetchFunction, args]);
+  }, [fetchFunction, args, enabled]);
 
   return { data, isLoading, error };
 }
