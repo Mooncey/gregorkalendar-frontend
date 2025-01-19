@@ -5,9 +5,12 @@ import TeamPage from './pages/team/Page';
 import LoginPage from './pages/login/Page';
 import SettingsPage from './pages/settings/Page';
 import Layout from './layout/Layout';
+import {useEffect} from 'react';
 
 function App() {
-
+  useEffect(() => {
+    document.title = "GregorKalendar"
+  })
 
   return (
     <Routes>
