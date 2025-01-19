@@ -56,7 +56,7 @@ export function rangeToBlocks(startBlock: Block, endBlock: Block): Block[] {
 	return blocks;
 }
   
-function rangeToTime(startBlock: Block, endBlock: Block): [TimeString, TimeString] {
+export function rangeToTime(startBlock: Block, endBlock: Block): [TimeString, TimeString] {
 	const blocks = rangeToBlocks(startBlock, endBlock);
 
 	const firstBlock = blocks[0];

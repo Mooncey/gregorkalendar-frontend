@@ -28,7 +28,10 @@ export interface GetTeamResponse {
 
 	teamId: number;
 
-	schedule: TeamSchedule;
+	schedule: {
+		schedule: TeamSchedule;
+		teamId: number
+	}
 	
 	availability: MemberAvailability;
 

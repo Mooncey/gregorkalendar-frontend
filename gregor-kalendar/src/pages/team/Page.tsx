@@ -6,10 +6,11 @@ import { useFetch } from "../../services/useFetch";
 import TeamInfoTab from "./components/TeamInfoTab";
 import AvailabilityTab from "./components/AvailabilityTab";
 import { useEffect, useMemo, useState } from "react";
-import { Block, MemberAvailability } from "../../types/types";
+import { Block, MemberAvailability, SlotAssignment } from "../../types/types";
 import { usePost } from "../../services/usePost";
 import { postTeamMemberAvailability } from "../../services/postTeamMemberAvailability";
 import { PostTeamMemberAvailabilityRequest, PostTeamMemberAvailabilityResponse } from "../../types/apiTypes";
+import ScheduleTab from "./components/ScheduleTab";
 
 export default function TeamPage() {
 
@@ -27,11 +28,14 @@ export default function TeamPage() {
 
     const [availableBlocks, setAvailableBlocks] = useState<Block[]>([])
     const [preferNotBlocks, setPreferNotBlocks] = useState<Block[]>([])
+    const [postedSchedule, setPostedSchedule] = useState<SlotAssignment[] | null>(null)
 
     useEffect(() => {
       if (data) {
         setAvailableBlocks(data.availability.availableBlocks)
         setPreferNotBlocks(data.availability.preferNotBlocks)
+        setPostedSchedule(data.schedule?.schedule.slotAssignments)
+        console.log(JSON.stringify(data.schedule?.schedule.slotAssignments))
       }
     }, [data]);
 
@@ -73,15 +77,7 @@ export default function TeamPage() {
         </TabsList>
         
         <TabsContent value="schedule">
-          <Card>
-            <CardHeader>
-              <CardTitle>Schedule</CardTitle>
-              <CardDescription>View the current team schedule</CardDescription>
-            </CardHeader>
-            <CardContent className="flex items-center justify-center h-64">
-              <p className="text-xl text-muted-foreground">No schedule posted yet.</p>
-            </CardContent>
-          </Card>
+          <ScheduleTab assignments={postedSchedule} />
         </TabsContent>
         
         <TabsContent value="availability">
