@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { Button } from "../../../components/ui/button"
 import { Input } from "../../../components/ui/input"
 import { Label } from "../../../components/ui/label"
@@ -13,18 +13,49 @@ import {
 } from "../../../components/ui/dialog"
 import { RadioGroup, RadioGroupItem } from "../../../components/ui/radio-group"
 import { PlusIcon } from 'lucide-react'
+import { postLeader } from '../../../services/postLeader'
+import { useParams } from 'react-router-dom'
+import { PostLeaderRequest, PostLeaderResponse } from '../../../types/apiTypes'
+import { usePost } from '../../../services/usePost'
+import { User } from '../../../types/types'
 
-export function AddLeaderButtonModal() {
+interface AddLeaderButtonModalProps {
+    setLeaders: React.Dispatch<React.SetStateAction<User[]>>;
+    leaders: User[]
+}
+
+
+
+
+
+export function AddLeaderButtonModal(props: AddLeaderButtonModalProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [addOption, setAddOption] = useState<'single' | 'multiple'>('single')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [file, setFile] = useState<File | null>(null)
+  
+  const { data, isLoading, error, sendRequest } = usePost<PostLeaderRequest, PostLeaderResponse>(postLeader)
+  const { id } = useParams();
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (addOption === 'single') {
+
+      const leader: User = {
+          name: name,
+          email: email
+      }
+      const requestBody: PostLeaderRequest = {
+        teamId: parseInt(id ?? '0'),
+        leader: leader
+      }
+
+      sendRequest(requestBody)
+
       console.log('Adding single user:', { name, email })
+      props.setLeaders([...props.leaders, leader])
       // Here you would typically call an API to add the user
     } else {
       console.log('Uploading CSV file:', file?.name)

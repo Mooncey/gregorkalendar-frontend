@@ -13,6 +13,10 @@ import {
 } from "../../../components/ui/dialog"
 import { RadioGroup, RadioGroupItem } from "../../../components/ui/radio-group"
 import { PlusIcon } from 'lucide-react'
+import { PostMemberRequest, PostMemberResponse } from '../../../types/apiTypes'
+import { postMember } from '../../../services/postMember'
+import { User } from '../../../types/types'
+import { useParams } from 'react-router-dom'
 
 export function AddMemberButtonModal() {
   const [isOpen, setIsOpen] = useState(false)
@@ -21,9 +25,24 @@ export function AddMemberButtonModal() {
   const [email, setEmail] = useState('')
   const [file, setFile] = useState<File | null>(null)
 
+  const { data, isLoading, error, sendRequest } = usePost<PostMemberRequest, PostMemberResponse>(postMember)
+  const { id } = useParams();
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (addOption === 'single') {
+
+      const member: User = {
+                name: name,
+                email: email
+            }
+            const requestBody: PostMemberRequest = {
+              teamId: parseInt(id ?? '0'),
+              member: member
+            }
+      
+      sendRequest(requestBody)
+
       console.log('Adding single user:', { name, email })
       // Here you would typically call an API to add the user
     } else {

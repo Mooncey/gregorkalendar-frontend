@@ -92,3 +92,37 @@ export interface PostTeamMemberAvailabilityResponse {
 	preferNotBlocks: Block[]
 
 }
+
+export interface PostLeaderRequest {
+
+	teamId: number;
+	
+	leader: User;
+
+}
+
+// Likely redundant since it's identical to PostLeader
+export interface PostLeaderResponse {
+
+	teamId: number;
+
+	leader: User;
+
+}
+
+export interface PostMemberRequest {
+
+	teamId: number;
+	
+	member: User;
+
+}
+
+// Likely redundant since it's identical to PostMember
+export interface PostMemberResponse {
+
+	teamId: number;
+
+	member: User;
+
+}
